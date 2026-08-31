@@ -1,45 +1,36 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import React ,  { useState} from 'react';
 import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  FlatList,
+} from 'react-native';
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
+type Todo= {
+  id:string; //every todo will have a unique id
+  title:string;//title of the todo
+  completed:boolean;//whether the todo is completed or not
 }
 
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
+const [task, setTask] = useState(''); //state to hold the current task input
+const [todos,setTodos]= useState<Todo[]>([]); //state to hold the list of todos
 
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
+const addTodo = () => {
+ if(!task.trim()){
+      return; //if the task is empty, do not add it
+ }
+
+ const newTodo: Todo = {
+  id: Date.now().toString(), //generate a unique id based on the current timestamp
+  title: task.trim(), //trim the task to remove any leading or trailing whitespace
+  completed: false, //new todos are not completed by default
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+setTodos(pre => [newTodo, ...pre]) //add the new todo to the beginning of the todos array
+setTask(''); //clear the input field after adding the todo
+};
 
-export default App;
+

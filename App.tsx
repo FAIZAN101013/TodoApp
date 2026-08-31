@@ -1,7 +1,7 @@
-import React ,  { useState} from 'react';
+import React, {useState} from 'react';
+
 import {
   SafeAreaView,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -9,28 +9,109 @@ import {
   FlatList,
 } from 'react-native';
 
-type Todo= {
-  id:string; //every todo will have a unique id
-  title:string;//title of the todo
-  completed:boolean;//whether the todo is completed or not
-}
+import {styles} from './styles';
 
-const [task, setTask] = useState(''); //state to hold the current task input
-const [todos,setTodos]= useState<Todo[]>([]); //state to hold the list of todos
-
-const addTodo = () => {
- if(!task.trim()){
-      return; //if the task is empty, do not add it
- }
-
- const newTodo: Todo = {
-  id: Date.now().toString(), //generate a unique id based on the current timestamp
-  title: task.trim(), //trim the task to remove any leading or trailing whitespace
-  completed: false, //new todos are not completed by default
-}
-
-setTodos(pre => [newTodo, ...pre]) //add the new todo to the beginning of the todos array
-setTask(''); //clear the input field after adding the todo
+type Todo = {
+  id: string;
+  title: string;
+  completed: boolean;
 };
 
+function App() {
+  const [task, setTask] = useState('');
+  const [todos, setTodos] = useState<Todo[]>([]);
 
+  const addTodo = () => {
+    if (!task.trim()) {
+      return;
+    }
+
+    const newTodo: Todo = {
+      id: Date.now().toString(),
+      title: task.trim(),
+      completed: false,
+    };
+
+    setTodos(prev => [newTodo, ...prev]);
+    setTask('');
+  };
+
+  const toggleTodo = (id: string) => {
+    setTodos(prev =>
+      prev.map(todo =>
+        todo.id === id
+          ? {...todo, completed: !todo.completed}
+          : todo,
+      ),
+    );
+  };
+
+  const deleteTodo = (id: string) => {
+    setTodos(prev => prev.filter(todo => todo.id !== id));
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>My Todo List</Text>
+
+      <View style={styles.inputRow}>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter a task..."
+          value={task}
+          onChangeText={setTask}
+          onSubmitEditing={addTodo}
+        />
+
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={addTodo}>
+          <Text style={styles.addButtonText}>Add</Text>
+        </TouchableOpacity>
+      </View>
+
+      <FlatList
+        data={todos}
+        keyExtractor={item => item.id}
+        ListEmptyComponent={
+          <Text style={styles.emptyText}>
+            No tasks yet.
+          </Text>
+        }
+        renderItem={({item}) => (
+          <View style={styles.todoRow}>
+            <TouchableOpacity
+              style={styles.todoContent}
+              onPress={() => toggleTodo(item.id)}>
+              
+              <View
+                style={[
+                  styles.checkbox,
+                  item.completed && styles.checkboxCompleted,
+                ]}>
+                {item.completed && (
+                  <Text style={styles.checkmark}>✓</Text>
+                )}
+              </View>
+
+              <Text
+                style={[
+                  styles.todoText,
+                  item.completed && styles.completedText,
+                ]}>
+                {item.title}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => deleteTodo(item.id)}>
+              <Text style={styles.deleteText}>Delete</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      />
+    </SafeAreaView>
+  );
+}
+
+export default App;

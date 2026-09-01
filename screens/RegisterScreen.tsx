@@ -35,6 +35,7 @@ function RegisterScreen({navigation}: Props) {
 
       <TextInput
         placeholder="Name"
+        placeholderTextColor="#888"
         value={name}
         onChangeText={setName}
         style={styles.authInput}
@@ -42,6 +43,7 @@ function RegisterScreen({navigation}: Props) {
 
       <TextInput
         placeholder="Email"
+        placeholderTextColor="#888"
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
@@ -51,6 +53,7 @@ function RegisterScreen({navigation}: Props) {
 
       <TextInput
         placeholder="Password"
+        placeholderTextColor="#888"
         value={password}
         onChangeText={setPassword}
         secureTextEntry

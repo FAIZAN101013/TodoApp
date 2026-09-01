@@ -33,6 +33,7 @@ function LoginScreen({navigation}: Props) {
 
       <TextInput
         placeholder="Email"
+        placeholderTextColor="#888"
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
@@ -42,6 +43,7 @@ function LoginScreen({navigation}: Props) {
 
       <TextInput
         placeholder="Password"
+        placeholderTextColor="#888"
         value={password}
         onChangeText={setPassword}
         secureTextEntry

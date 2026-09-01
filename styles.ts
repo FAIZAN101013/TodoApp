@@ -4,12 +4,14 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: '#fff',
   },
 
   title: {
     fontSize: 32,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#000',
   },
 
   inputRow: {
@@ -24,6 +26,7 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 12,
     fontSize: 16,
+    color: '#000',
   },
 
   addButton: {
@@ -78,6 +81,7 @@ export const styles = StyleSheet.create({
   todoText: {
     fontSize: 17,
     flex: 1,
+    color: '#000',
   },
 
   completedText: {
@@ -110,11 +114,13 @@ export const styles = StyleSheet.create({
   authContainer: {
     flex: 1,
     padding: 20,
+    backgroundColor: '#fff',
   },
 
   authTitle: {
     fontSize: 32,
     fontWeight: 'bold',
+    color: '#000',
   },
 
   authInput: {
@@ -124,6 +130,7 @@ export const styles = StyleSheet.create({
     padding: 12,
     marginTop: 12,
     fontSize: 16,
+    color: '#000',
   },
 
   authButton: {

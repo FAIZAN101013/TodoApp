@@ -79,6 +79,7 @@ function HomeScreen({navigation}: Props) {
       <View style={styles.inputRow}>
         <TextInput
           placeholder="Enter a task..."
+          placeholderTextColor="#888"
           value={task}
           onChangeText={setTask}
           onSubmitEditing={addTodo}

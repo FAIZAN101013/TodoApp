@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+  Alert,
   SafeAreaView,
   Text,
   TextInput,
@@ -12,6 +13,7 @@ import {
 
 import {RootStackParamList} from '../App';
 import {styles} from '../styles';
+import {apiRequest} from '../api';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
@@ -23,10 +25,26 @@ function RegisterScreen({navigation}: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // No backend yet, so registering just sends the user
-  // back to the Login screen.
-  const handleRegister = () => {
-    navigation.navigate('Login');
+  // Creates the account on the backend,
+  // then sends the user back to Login to sign in.
+  const handleRegister = async () => {
+    if (!name.trim() || !email.trim() || !password) {
+      Alert.alert('Missing info', 'Please fill in name, email and password.');
+      return;
+    }
+
+    try {
+      await apiRequest('/auth/register', 'POST', {
+        name: name,
+        email: email,
+        password: password,
+      });
+
+      Alert.alert('Success', 'Account created! Please log in.');
+      navigation.navigate('Login');
+    } catch (error: any) {
+      Alert.alert('Register failed', error.message);
+    }
   };
 
   return (

@@ -37,6 +37,19 @@ type Task = {
 
 const PRIORITIES: Array<Task['priority']> = ['Low', 'Medium', 'High'];
 
+// Which badge colors to use for each priority
+const badgeStyles = {
+  Low: styles.badgeLow,
+  Medium: styles.badgeMedium,
+  High: styles.badgeHigh,
+};
+
+const badgeTextStyles = {
+  Low: styles.badgeTextLow,
+  Medium: styles.badgeTextMedium,
+  High: styles.badgeTextHigh,
+};
+
 function HomeScreen({navigation}: Props) {
   // The form fields for a new task
   const [title, setTitle] = useState('');
@@ -214,10 +227,21 @@ function HomeScreen({navigation}: Props) {
                   <Text style={styles.todoMeta}>{item.description}</Text>
                 ) : null}
 
-                <Text style={styles.todoMeta}>
-                  {item.deadline ? 'Due: ' + item.deadline + '  •  ' : ''}
-                  Priority: {item.priority}
-                </Text>
+                {item.deadline ? (
+                  <Text style={styles.todoMeta}>Due: {item.deadline}</Text>
+                ) : null}
+
+                <View style={styles.badgeRow}>
+                  <View style={[styles.badge, badgeStyles[item.priority]]}>
+                    <Text
+                      style={[
+                        styles.badgeText,
+                        badgeTextStyles[item.priority],
+                      ]}>
+                      {item.priority}
+                    </Text>
+                  </View>
+                </View>
               </View>
             </TouchableOpacity>
 

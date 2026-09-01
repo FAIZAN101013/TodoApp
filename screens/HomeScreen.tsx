@@ -14,6 +14,10 @@ import {
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
+
 import {RootStackParamList} from '../App';
 import {styles} from '../styles';
 import {apiRequest, setToken} from '../api';
@@ -50,6 +54,26 @@ const badgeTextStyles = {
   High: styles.badgeTextHigh,
 };
 
+// Adds a leading zero: 7 -> "07"
+function two(n: number) {
+  return n < 10 ? '0' + n : '' + n;
+}
+
+// Turns a Date into text like "2026-09-05 18:00"
+function formatDateTime(d: Date) {
+  return (
+    d.getFullYear() +
+    '-' +
+    two(d.getMonth() + 1) +
+    '-' +
+    two(d.getDate()) +
+    ' ' +
+    two(d.getHours()) +
+    ':' +
+    two(d.getMinutes())
+  );
+}
+
 function HomeScreen({navigation}: Props) {
   // The form fields for a new task
   const [title, setTitle] = useState('');
@@ -59,6 +83,30 @@ function HomeScreen({navigation}: Props) {
 
   // The list of tasks from the server
   const [tasks, setTasks] = useState<Task[]>([]);
+
+  // Controls for the deadline calendar/clock pop-ups
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [pickedDate, setPickedDate] = useState(new Date());
+
+  // Step 1: user picked a day on the calendar -> now ask for the time
+  const onDatePicked = (event: DateTimePickerEvent, date?: Date) => {
+    setShowDatePicker(false);
+
+    if (event.type === 'set' && date) {
+      setPickedDate(date);
+      setShowTimePicker(true);
+    }
+  };
+
+  // Step 2: user picked a time -> save the full deadline text
+  const onTimePicked = (event: DateTimePickerEvent, date?: Date) => {
+    setShowTimePicker(false);
+
+    if (event.type === 'set' && date) {
+      setDeadline(formatDateTime(date));
+    }
+  };
 
   // Ask the backend for this user's tasks
   const loadTasks = async () => {
@@ -158,13 +206,30 @@ function HomeScreen({navigation}: Props) {
         style={styles.authInput}
       />
 
-      <TextInput
-        placeholder="Deadline e.g. 2026-09-05 18:00 (optional)"
-        placeholderTextColor="#888"
-        value={deadline}
-        onChangeText={setDeadline}
-        style={styles.authInput}
-      />
+      {/* Tapping this opens the calendar (then the clock) */}
+      <TouchableOpacity
+        onPress={() => setShowDatePicker(true)}
+        style={styles.authInput}>
+        <Text style={deadline ? styles.deadlineText : styles.deadlinePlaceholder}>
+          {deadline ? 'Deadline: ' + deadline : 'Pick a deadline (optional)'}
+        </Text>
+      </TouchableOpacity>
+
+      {showDatePicker && (
+        <DateTimePicker
+          value={pickedDate}
+          mode="date"
+          onChange={onDatePicked}
+        />
+      )}
+
+      {showTimePicker && (
+        <DateTimePicker
+          value={pickedDate}
+          mode="time"
+          onChange={onTimePicked}
+        />
+      )}
 
       {/* Priority selector: three small buttons */}
       <View style={styles.priorityRow}>

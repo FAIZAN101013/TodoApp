@@ -207,6 +207,17 @@ export const styles = StyleSheet.create({
     marginTop: 2,
   },
 
+  // Text inside the "pick a deadline" field
+  deadlineText: {
+    fontSize: 16,
+    color: '#000',
+  },
+
+  deadlinePlaceholder: {
+    fontSize: 16,
+    color: '#888',
+  },
+
   // Small colored pill showing the task's priority
   badgeRow: {
     flexDirection: 'row',

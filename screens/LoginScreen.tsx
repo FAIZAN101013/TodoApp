@@ -7,6 +7,15 @@ import {
   View,
 } from 'react-native';
 
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+
+type RootStackParamList = {
+  Login: undefined;
+  Register: undefined;
+};
+
+type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
+
 function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

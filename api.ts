@@ -1,9 +1,10 @@
 // Small helper for talking to our backend server.
 
-// 10.0.2.2 is how the Android emulator reaches "localhost" on your PC.
-// If you test on a REAL phone, replace this with your PC's local IP,
-// for example: 'http://192.168.1.5:5000/api'
-const BASE_URL = 'http://10.0.2.2:5000/api';
+// The phone reaches the PC through "adb reverse tcp:5000 tcp:5000",
+// which forwards the phone's localhost:5000 to the PC's port 5000.
+// Run that adb command again if you replug the USB cable.
+// (On an emulator you could also use 'http://10.0.2.2:5000/api'.)
+const BASE_URL = 'http://localhost:5000/api';
 
 // The login token is kept in memory while the app is open.
 // Every request sends it so the server knows who we are.

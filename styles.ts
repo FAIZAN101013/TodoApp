@@ -96,4 +96,55 @@ export const styles = StyleSheet.create({
     color: '#888',
     fontSize: 16,
   },
+
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  logoutText: {
+    color: 'red',
+  },
+
+  authContainer: {
+    flex: 1,
+    padding: 20,
+  },
+
+  authTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+  },
+
+  authInput: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    padding: 12,
+    marginTop: 12,
+    fontSize: 16,
+  },
+
+  authButton: {
+    backgroundColor: '#007AFF',
+    padding: 15,
+    borderRadius: 8,
+    marginTop: 20,
+    alignItems: 'center',
+  },
+
+  authButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+
+  secondaryButton: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+
+  secondaryButtonText: {
+    color: '#007AFF',
+  },
 });

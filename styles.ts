@@ -154,4 +154,46 @@ export const styles = StyleSheet.create({
   secondaryButtonText: {
     color: '#007AFF',
   },
+
+  priorityRow: {
+    flexDirection: 'row',
+    marginTop: 12,
+  },
+
+  priorityButton: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#007AFF',
+    borderRadius: 8,
+    paddingVertical: 8,
+    alignItems: 'center',
+    marginRight: 8,
+  },
+
+  priorityButtonSelected: {
+    backgroundColor: '#007AFF',
+  },
+
+  priorityButtonText: {
+    color: '#007AFF',
+  },
+
+  priorityButtonTextSelected: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+
+  taskList: {
+    marginTop: 20,
+  },
+
+  todoTextArea: {
+    flex: 1,
+  },
+
+  todoMeta: {
+    fontSize: 13,
+    color: '#888',
+    marginTop: 2,
+  },
 });

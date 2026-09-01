@@ -4,42 +4,72 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
 } from 'react-native';
 
-function RegisterScreen() {
+import {
+  NativeStackScreenProps,
+} from '@react-navigation/native-stack';
+
+import {RootStackParamList} from '../App';
+import {styles} from '../styles';
+
+type Props = NativeStackScreenProps<
+  RootStackParamList,
+  'Register'
+>;
+
+function RegisterScreen({navigation}: Props) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // No backend yet, so registering just sends the user
+  // back to the Login screen.
+  const handleRegister = () => {
+    navigation.navigate('Login');
+  };
+
   return (
-    <SafeAreaView>
-      <View>
-        <Text>Register</Text>
+    <SafeAreaView style={styles.authContainer}>
+      <Text style={styles.authTitle}>Create Account</Text>
 
-        <TextInput
-          placeholder="Name"
-          value={name}
-          onChangeText={setName}
-        />
+      <TextInput
+        placeholder="Name"
+        value={name}
+        onChangeText={setName}
+        style={styles.authInput}
+      />
 
-        <TextInput
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-        />
+      <TextInput
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+        keyboardType="email-address"
+        style={styles.authInput}
+      />
 
-        <TextInput
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-        />
+      <TextInput
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+        style={styles.authInput}
+      />
 
-        <TouchableOpacity>
-          <Text>Register</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        onPress={handleRegister}
+        style={styles.authButton}>
+        <Text style={styles.authButtonText}>Register</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Login')}
+        style={styles.secondaryButton}>
+        <Text style={styles.secondaryButtonText}>
+          Already have an account? Login
+        </Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
